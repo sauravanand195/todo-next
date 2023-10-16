@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import LabelIcon from '@mui/icons-material/Label';
 import AddOutlined from '@mui/icons-material/AddOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 
 const cards = [1, 2, 3, 4, 5, 6];
 const colorCode = {
@@ -72,7 +73,7 @@ const Index = () => {
           </Tooltip>
         </Stack>
         <Container maxWidth="lg">
-          <TextField sx={{ pb: 4 }}
+          {/* <TextField sx={{ pb: 4 }}
             fullWidth
             id="search-bar"
             className="text"
@@ -80,8 +81,11 @@ const Index = () => {
             variant="outlined"
             placeholder="Search text..."
             size="small"
-          />
-
+          /> */}
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', pb: 6 }} >
+            <SearchIcon color="primary" sx={{ mr: 1, my: 0.5 }} />
+            <TextField fullWidth id="input-with-sx" label="Search your task" variant="standard" />
+          </Box>
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
@@ -92,7 +96,7 @@ const Index = () => {
                     action={
                       <IconButton>
                         <Tooltip arrow title="important" leaveDelay={400}>
-                          <BookmarksIcon sx={{ color: "red" }} />
+                          <BookmarksIcon sx={{ color: "blue" }} />
                         </Tooltip>
                       </IconButton>
                     }
