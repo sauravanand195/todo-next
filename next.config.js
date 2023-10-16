@@ -1,6 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
+  env: {
+    customKey: 'my-value',
+    basePath: 'http://localhost:8888'
+  },
 }
-
-module.exports = nextConfig
