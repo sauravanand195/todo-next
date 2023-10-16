@@ -14,13 +14,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FooterTodo from '../components/footerTodo';
-import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import SearchIcon from "@mui/icons-material/Search";
 import AddTaskPopup from '../components/addTaskPopup';
 
 const cards = [1, 2, 3, 4, 5, 6];
+const colorCode = {
+  'high': '#FED7D9',
+  'low': '#D6FFFB',
+  'normal': '#F9F7B4',
+}
 
 const defaultTheme = createTheme();
 
@@ -71,7 +76,9 @@ const Index = () => {
           </Container>
         </Box>
         <Stack sx={{ pt: 4, pb: 4 }} direction="row" justifyContent="center" onClick={() => setOpen(true)}>
-          <Button variant="contained"><AddCircleOutlineOutlinedIcon />&nbsp;Create Todo</Button>
+          <Tooltip title="Click to create todo" top arrow leaveDelay={400}>
+            <Button variant="contained"><AddCircleOutlineOutlinedIcon />&nbsp;Create Todo</Button>
+          </Tooltip>
         </Stack>
         <Container maxWidth="lg">
           <TextField sx={{ pb: 4 }}
