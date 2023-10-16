@@ -1,24 +1,15 @@
 import { useEffect, useState } from 'react'
-
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import HomeIcon from '@mui/icons-material/Home';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FooterTodo from '../components/footerTodo';
-import { Box, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import SearchIcon from "@mui/icons-material/Search";
 import AddTaskPopup from '../components/addTaskPopup';
+import FooterTodo from '../components/footerTodo';
+
+import { Checkbox, TextField, createTheme, CardActions, CardContent, Grid, CssBaseline, Stack, AppBar, Toolbar, Typography, Container, Box, Tooltip, Button, Card, CardHeader, IconButton, FormGroup, FormControlLabel } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
+import LabelIcon from '@mui/icons-material/Label';
+import AddOutlined from '@mui/icons-material/AddOutlined';
 
 const cards = [1, 2, 3, 4, 5, 6];
 const colorCode = {
@@ -27,7 +18,8 @@ const colorCode = {
   'normal': '#F9F7B4',
 }
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme()
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const Index = () => {
   const [open, setOpen] = useState(false)
@@ -42,7 +34,7 @@ const Index = () => {
   })
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <div style={{ backgroundColor: "#FFFCF9" }}>
       <AddTaskPopup open={open} setOpen={setOpen} />
       <CssBaseline />
       <AppBar position="relative">
@@ -56,7 +48,6 @@ const Index = () => {
       <main>
         <Box
           sx={{
-            bgcolor: 'background.paper',
             pt: 8,
           }}
         >
@@ -75,9 +66,9 @@ const Index = () => {
             </Typography>
           </Container>
         </Box>
-        <Stack sx={{ pt: 4, pb: 4 }} direction="row" justifyContent="center" onClick={() => setOpen(true)}>
-          <Tooltip title="Click to create todo" top arrow leaveDelay={400}>
-            <Button variant="contained"><AddCircleOutlineOutlinedIcon />&nbsp;Create Todo</Button>
+        <Stack sx={{ pt: 4, pb: 4 }} direction="row" justifyContent="center">
+          <Tooltip title="Click to create todo" arrow leaveDelay={400}>
+            <Button onClick={() => setOpen(true)} variant="contained"><AddOutlined />&nbsp;Create Todo</Button>
           </Tooltip>
         </Stack>
         <Container maxWidth="lg">
@@ -97,18 +88,32 @@ const Index = () => {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  <CardHeader
+                    action={
+                      <IconButton>
+                        <Tooltip arrow title="important" leaveDelay={400}>
+                          <BookmarksIcon sx={{ color: "red" }} />
+                        </Tooltip>
+                      </IconButton>
+                    }
+                    title={<FormGroup>
+                      <Tooltip placement='top-start' title="Mark Complete" leaveDelay={200}>
+                        <FormControlLabel control={<Checkbox
+                          icon={<LabelOutlinedIcon />}
+                          checkedIcon={<LabelIcon />}
+                        />} label="Heading" />
+                      </Tooltip>
+                    </FormGroup>}
+                  />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
                     <Typography>
                       This is a media card. You can use this section to describe the
                       content.
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <IconButton><EditIcon /></IconButton>
+                    <IconButton><DeleteIcon /></IconButton>
                   </CardActions>
                 </Card>
               </Grid>
@@ -117,7 +122,7 @@ const Index = () => {
         </Container>
       </main>
       <FooterTodo />
-    </ThemeProvider>
+    </div>
   );
 }
 
