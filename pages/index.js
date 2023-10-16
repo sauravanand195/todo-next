@@ -11,6 +11,9 @@ import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import LabelIcon from '@mui/icons-material/Label';
 import AddOutlined from '@mui/icons-material/AddOutlined';
 import SearchIcon from '@mui/icons-material/Search';
+import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
+import TokenIcon from '@mui/icons-material/Token';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 const cards = [1, 2, 3, 4, 5, 6];
 const colorCode = {
@@ -96,7 +99,7 @@ const Index = () => {
                     action={
                       <IconButton>
                         <Tooltip arrow title="important" leaveDelay={400}>
-                          <BookmarksIcon sx={{ color: "blue" }} />
+                          <SpeedIcon sx={{ color: "red" }} />
                         </Tooltip>
                       </IconButton>
                     }
