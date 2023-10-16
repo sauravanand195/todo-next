@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
+import HomeIcon from '@mui/icons-material/Home';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,50 +14,76 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FooterTodo from '../components/footerTodo';
-import { InputAdornment, TextField } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import SearchIcon from "@mui/icons-material/Search";
+import AddTaskPopup from '../components/addTaskPopup';
 
 const cards = [1, 2, 3, 4, 5, 6];
 
 const defaultTheme = createTheme();
 
 const Index = () => {
+  const [open, setOpen] = useState(false)
   const basePath = process.env.basePath
   useEffect(() => {
     const fetchdata = async () => {
-      const response = await fetch(`${basePath}/todo/get-todos`)
-      const responseObj = await response.json()
-      console.log(responseObj);
+      // const response = await fetch(`${basePath}/todo/get-todos`)
+      // const responseObj = await response.json()
+      // console.log(responseObj);
     }
     fetchdata()
   })
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <AddTaskPopup open={open} setOpen={setOpen} />
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
+          <HomeIcon sx={{ mr: 1 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Todo App
+            Home
           </Typography>
         </Toolbar>
       </AppBar>
       <main>
-        <Container sx={{ py: 8 }} maxWidth="lg">
-          <TextField fullWidth id="outlined-basic" label="Task" variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AssignmentOutlinedIcon />
-                </InputAdornment>
-              ),
-            }}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h2"
+              variant="h3"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              Todo App
+            </Typography>
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              Maintain your day-to-day tasks or list everything that you have to do, with the most important tasks at the top of the list, and the least important tasks at the bottom.
+            </Typography>
+          </Container>
+        </Box>
+        <Stack sx={{ pt: 4, pb: 4 }} direction="row" justifyContent="center" onClick={() => setOpen(true)}>
+          <Button variant="contained"><AddCircleOutlineOutlinedIcon />&nbsp;Create Todo</Button>
+        </Stack>
+        <Container maxWidth="lg">
+          <TextField sx={{ pb: 4 }}
+            fullWidth
+            id="search-bar"
+            className="text"
+            label="Enter keyword to search"
+            variant="outlined"
+            placeholder="Search text..."
+            size="small"
           />
-          <Stack sx={{ pt: 4, pb: 8 }} direction="row" justifyContent="center">
-            <Button variant="contained"><AddCircleOutlineOutlinedIcon />&nbsp;Add Todo</Button>
-          </Stack>
+
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
