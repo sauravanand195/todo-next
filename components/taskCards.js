@@ -10,10 +10,25 @@ import axios from "axios";
 const TaskCards = ({ todoData, fetchData }) => {
     const basePath = process.env.basePath
 
+    const updatestatus = async (val) => {
+        console.log('val :>> ', val);
+
+        try {
+            const response = await axios.put(`${basePath}/todo/update-todo`, { id: val._id, task: val.task, description: val.description, priority: val.priority, status: (val.status == 'incomplete') ? 'complete' : 'incomplete' })
+            console.log('response :>> ', response);
+            if (response?.data?.error == false) {
+                console.log('Data updated successfully')
+                fetchData()
+            } else { console.log('Error msg', response?.data?.message) }
+        } catch (err) {
+            console.log('Error :>> ', err);
+        }
+    }
+
     const getPCode = (val) => {
         switch (val) {
             case 'high': return 'red';
-            case 'normal': return 'orange';
+            case 'medium': return 'orange';
             case 'low': return 'blue';
         }
     }
@@ -33,7 +48,7 @@ const TaskCards = ({ todoData, fetchData }) => {
 
     return (
         <Container maxWidth="lg">
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', pb: 6 }} >
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', pb: 6 }}>
                 <SearchIcon color="primary" sx={{ mr: 1, my: 0.5 }} />
                 <TextField fullWidth id="input-with-sx" label="Search your task" variant="standard" />
             </Box>
@@ -41,7 +56,7 @@ const TaskCards = ({ todoData, fetchData }) => {
                 {todoData?.map((val, ind) => (
                     <Grid item key={ind} xs={12} sm={6} md={4}>
                         <Card
-                            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                            sx={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: (val.status == 'complete') ? 'lightgray' : '' }}
                         >
                             <CardHeader
                                 action={
@@ -52,8 +67,10 @@ const TaskCards = ({ todoData, fetchData }) => {
                                     </IconButton>
                                 }
                                 title={<FormGroup>
-                                    <Tooltip placement='top-start' title="Mark Complete" leaveDelay={200}>
+                                    <Tooltip placement='top-start' title={`${val.status == 'complete' ? 'Mark In-complete' : 'Mark Complete'}`} leaveDelay={200}>
                                         <FormControlLabel control={<Checkbox
+                                            checked={val.status == 'complete'}
+                                            onChange={() => updatestatus(val)}
                                             icon={<LabelOutlinedIcon />}
                                             checkedIcon={<LabelIcon />}
                                         />} label={val.task} />
@@ -71,7 +88,7 @@ const TaskCards = ({ todoData, fetchData }) => {
                     </Grid>
                 ))}
             </Grid>
-        </Container>
+        </Container >
     );
 }
 

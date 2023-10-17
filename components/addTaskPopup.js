@@ -20,7 +20,7 @@ const AddTaskPopup = ({ open, setOpen, fetchData }) => {
 
     const createTask = async () => {
         const basePath = process.env.basePath
-        const paramsToPass = { ...inputData, status: "In-complete" }
+        const paramsToPass = { ...inputData, status: "incomplete" }
         try {
             /* Using fetch */
             // const response = await fetch(`${basePath}/todo/add-todo`, {
