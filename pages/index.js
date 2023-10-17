@@ -31,7 +31,7 @@ const Index = (props) => {
         </Toolbar>
       </AppBar>
       <main>
-        <Box sx={{ pt: 8 }}>
+        <Box sx={{ pt: 4 }}>
           <Container maxWidth="sm">
             <Typography component="h2" variant="h3" align="center" color="text.primary" gutterBottom>
               Todo App
