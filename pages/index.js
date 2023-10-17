@@ -2,44 +2,25 @@ import { useEffect, useState } from 'react'
 import AddTaskPopup from '../components/addTaskPopup';
 import FooterTodo from '../components/footerTodo';
 
-import { Checkbox, TextField, createTheme, CardActions, CardContent, Grid, CssBaseline, Stack, AppBar, Toolbar, Typography, Container, Box, Tooltip, Button, Card, CardHeader, IconButton, FormGroup, FormControlLabel } from '@mui/material';
+import { CssBaseline, Stack, AppBar, Toolbar, Typography, Container, Box, Tooltip, Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
-import LabelIcon from '@mui/icons-material/Label';
 import AddOutlined from '@mui/icons-material/AddOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
-import TokenIcon from '@mui/icons-material/Token';
-import SpeedIcon from '@mui/icons-material/Speed';
+import TaskCards from '../components/taskCards';
 
-const cards = [1, 2, 3, 4, 5, 6];
-const colorCode = {
-  'high': '#FED7D9',
-  'low': '#D6FFFB',
-  'normal': '#F9F7B4',
-}
-
-const defaultTheme = createTheme()
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-const Index = () => {
-  const [open, setOpen] = useState(false)
+const Index = (props) => {
   const basePath = process.env.basePath
-  useEffect(() => {
-    const fetchdata = async () => {
-      // const response = await fetch(`${basePath}/todo/get-todos`)
-      // const responseObj = await response.json()
-      // console.log(responseObj);
-    }
-    fetchdata()
-  })
+  const [open, setOpen] = useState(false)
+  const [todoData, setTodoData] = useState(props.data)
+
+  const fetchData = async () => {
+    const response = await fetch(`${basePath}/todo/get-todos`)
+    const responseObj = await response.json()
+    setTodoData(responseObj?.data)
+  }
 
   return (
     <div style={{ backgroundColor: "#FFFCF9" }}>
-      <AddTaskPopup open={open} setOpen={setOpen} />
+      <AddTaskPopup open={open} setOpen={setOpen} fetchData={fetchData} />
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
@@ -50,19 +31,9 @@ const Index = () => {
         </Toolbar>
       </AppBar>
       <main>
-        <Box
-          sx={{
-            pt: 8,
-          }}
-        >
+        <Box sx={{ pt: 8 }}>
           <Container maxWidth="sm">
-            <Typography
-              component="h2"
-              variant="h3"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
+            <Typography component="h2" variant="h3" align="center" color="text.primary" gutterBottom>
               Todo App
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
@@ -75,62 +46,23 @@ const Index = () => {
             <Button onClick={() => setOpen(true)} variant="contained"><AddOutlined />&nbsp;Create Todo</Button>
           </Tooltip>
         </Stack>
-        <Container maxWidth="lg">
-          {/* <TextField sx={{ pb: 4 }}
-            fullWidth
-            id="search-bar"
-            className="text"
-            label="Enter keyword to search"
-            variant="outlined"
-            placeholder="Search text..."
-            size="small"
-          /> */}
-          <Box sx={{ display: 'flex', alignItems: 'flex-end', pb: 6 }} >
-            <SearchIcon color="primary" sx={{ mr: 1, my: 0.5 }} />
-            <TextField fullWidth id="input-with-sx" label="Search your task" variant="standard" />
-          </Box>
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardHeader
-                    action={
-                      <IconButton>
-                        <Tooltip arrow title="important" leaveDelay={400}>
-                          <SpeedIcon sx={{ color: "red" }} />
-                        </Tooltip>
-                      </IconButton>
-                    }
-                    title={<FormGroup>
-                      <Tooltip placement='top-start' title="Mark Complete" leaveDelay={200}>
-                        <FormControlLabel control={<Checkbox
-                          icon={<LabelOutlinedIcon />}
-                          checkedIcon={<LabelIcon />}
-                        />} label="Heading" />
-                      </Tooltip>
-                    </FormGroup>}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <IconButton><EditIcon /></IconButton>
-                    <IconButton><DeleteIcon /></IconButton>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <TaskCards todoData={todoData} fetchData={fetchData} />
       </main>
       <FooterTodo />
     </div>
   );
+}
+
+export const getServerSideProps = async (ctx) => {
+  const basePath = process.env.basePath
+  const response = await fetch(`${basePath}/todo/get-todos`)
+  const responseObj = await response.json()
+
+  return {
+    props: {
+      data: responseObj.data || null
+    }
+  }
 }
 
 export default Index;
