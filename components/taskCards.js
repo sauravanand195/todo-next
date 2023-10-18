@@ -6,13 +6,15 @@ import LabelIcon from '@mui/icons-material/Label';
 import SearchIcon from '@mui/icons-material/Search';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import axios from "axios";
+import { useState } from "react";
+import TaskPopup from "./taskPopup";
 
 const TaskCards = ({ todoData, fetchData }) => {
+    const [openPopup, setOpenPopup] = useState(false)
+    const [selectedTask, setSelectedTask] = useState({})
     const basePath = process.env.basePath
 
     const updatestatus = async (val) => {
-        console.log('val :>> ', val);
-
         try {
             const response = await axios.put(`${basePath}/todo/update-todo`, { id: val._id, task: val.task, description: val.description, priority: val.priority, status: (val.status == 'incomplete') ? 'complete' : 'incomplete' })
             console.log('response :>> ', response);
@@ -46,8 +48,14 @@ const TaskCards = ({ todoData, fetchData }) => {
         }
     }
 
+    const editTask = (val) => {
+        setOpenPopup(true)
+        setSelectedTask(val)
+    }
+
     return (
         <Container maxWidth="lg">
+            {openPopup && <TaskPopup open={openPopup} setOpen={setOpenPopup} fetchData={fetchData} selectedTask={selectedTask} action="update" />}
             <Box sx={{ display: 'flex', alignItems: 'flex-end', pb: 6 }}>
                 <SearchIcon color="primary" sx={{ mr: 1, my: 0.5 }} />
                 <TextField fullWidth id="input-with-sx" label="Search your task" variant="standard" />
@@ -81,7 +89,7 @@ const TaskCards = ({ todoData, fetchData }) => {
                                 <Typography>{val.description}</Typography>
                             </CardContent>
                             <CardActions>
-                                <IconButton><EditIcon /></IconButton>
+                                <IconButton onClick={() => editTask(val)}><EditIcon /></IconButton>
                                 <IconButton onClick={() => { deleteTask(val._id) }}><DeleteIcon /></IconButton>
                             </CardActions>
                         </Card>

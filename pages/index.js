@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import AddTaskPopup from '../components/addTaskPopup';
+import { useState } from 'react'
 import FooterTodo from '../components/footerTodo';
 
 import { CssBaseline, Stack, AppBar, Toolbar, Typography, Container, Box, Tooltip, Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AddOutlined from '@mui/icons-material/AddOutlined';
 import TaskCards from '../components/taskCards';
+import TaskPopup from '../components/taskPopup';
 
 const Index = (props) => {
   const basePath = process.env.basePath
@@ -20,7 +20,7 @@ const Index = (props) => {
 
   return (
     <div style={{ backgroundColor: "#FFFCF9" }}>
-      <AddTaskPopup open={open} setOpen={setOpen} fetchData={fetchData} />
+      <TaskPopup open={open} setOpen={setOpen} fetchData={fetchData} action="create" />
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
@@ -32,7 +32,7 @@ const Index = (props) => {
       </AppBar>
       <main>
         <Box sx={{ pt: 4 }}>
-          <Container maxWidth="sm">
+          <Container maxWidth="md">
             <Typography component="h2" variant="h3" align="center" color="text.primary" gutterBottom>
               Todo App
             </Typography>
@@ -41,7 +41,7 @@ const Index = (props) => {
             </Typography>
           </Container>
         </Box>
-        <Stack sx={{ pt: 4, pb: 4 }} direction="row" justifyContent="center">
+        <Stack sx={{ pt: 2, pb: 4 }} direction="row" justifyContent="center">
           <Tooltip title="Click to create todo" arrow leaveDelay={400}>
             <Button onClick={() => setOpen(true)} variant="contained"><AddOutlined />&nbsp;Create Todo</Button>
           </Tooltip>
