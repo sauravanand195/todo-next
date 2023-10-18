@@ -8,6 +8,7 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import axios from "axios";
 import { useState } from "react";
 import TaskPopup from "./taskPopup";
+import { CustomToolTip } from "../public/js/commonFun";
 
 const TaskCards = ({ todoData, fetchData }) => {
     const [openPopup, setOpenPopup] = useState(false)
@@ -69,9 +70,9 @@ const TaskCards = ({ todoData, fetchData }) => {
                             <CardHeader
                                 action={
                                     <IconButton>
-                                        <Tooltip arrow title={val.priority} leaveDelay={400}>
+                                        <CustomToolTip placement="top" arrow title={val.priority} leaveDelay={500}>
                                             <BookmarksIcon sx={{ color: getPCode(val.priority) }} />
-                                        </Tooltip>
+                                        </CustomToolTip>
                                     </IconButton>
                                 }
                                 title={<FormGroup>
