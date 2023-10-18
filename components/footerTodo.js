@@ -2,7 +2,7 @@ import { Box, Link, Typography } from "@mui/material";
 
 const FooterTodo = () => {
     return (
-        <Box sx={{ p: 6 }} component="footer">
+        <Box sx={{ p: 6, mt: 'auto' }} component="footer">
             <Typography
                 variant="body2"
                 align="center"

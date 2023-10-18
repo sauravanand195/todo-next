@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import FooterTodo from '../components/footerTodo';
 import { CustomToolTip } from '../public/js/commonFun';
-import { CssBaseline, Stack, AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import { CssBaseline, Stack, Typography, Container, Box, Button } from '@mui/material';
 import AddOutlined from '@mui/icons-material/AddOutlined';
 import TaskCards from '../components/taskCards';
 import TaskPopup from '../components/taskPopup';
+import AppNavBar from '../components/appNavBar';
 
 const Index = (props) => {
   const basePath = process.env.basePath
@@ -22,15 +22,8 @@ const Index = (props) => {
     <div style={{ backgroundColor: "#FFFCF9" }}>
       <TaskPopup open={open} setOpen={setOpen} fetchData={fetchData} action="create" />
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <HomeIcon sx={{ mr: 1 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Home
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
+      <AppNavBar label="Home" />
+      <main style={{ minHeight: '78vh' }}>
         <Box sx={{ pt: 4 }}>
           <Container maxWidth="md">
             <Typography component="h2" variant="h4" align="center" color="text.primary" gutterBottom>
