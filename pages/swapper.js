@@ -1,62 +1,78 @@
-import { Box, Card, CardContent, CardHeader, Checkbox, Container, FormControlLabel, FormGroup, Grid, IconButton, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardHeader, Checkbox, Container, FormControlLabel, FormGroup, Grid, IconButton, Stack, Typography } from "@mui/material";
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import LabelIcon from '@mui/icons-material/Label';
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
-import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import AppNavBar from "../components/appNavBar";
 import FooterTodo from "../components/footerTodo";
+import { useState } from "react";
 
 const Swapper = () => {
-    let contentA = ['Saurav', 'Anvesh', 'Viraj', 'Polar', 'Tharic']
-    let contentB = []
+    const [team, setTeam] = useState([
+        { name: 'Saurav', state: false },
+        { name: 'Anvesh', state: false },
+        { name: 'Viraj', state: false },
+        { name: 'Polar', state: false },
+        { name: 'Tharic', state: false }
+    ])
+    const [teamB, setTeamB] = useState([])
+
+    const updateSelection = (ind, val, e) => {
+        let tm = team
+        tm[ind].state = e.checked
+        setTeam(tm)
+    }
+
+    const modifyTeams = () => {
+        let sel = [], rem = []
+        rem = team.filter(i => { if (i.state === true) sel.push(i); else return true })
+        setTeamB([...teamB, ...sel]); setTeam(rem)
+    }
 
     return (
         <div>
             <AppNavBar label="Home" />
             <Container maxWidth="md" sx={{ minHeight: '78vh' }}>
-                <Grid container pt={8}>
-                    <Grid item md={5} sm={5} xs={5}>
+                <Grid container pt={8} spacing={2}>
+                    <Grid item md={6} sm={6} xs={6}>
                         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <CardHeader title={<Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center" }}>Team A</Typography>} />
                             <CardContent sx={{ flexGrow: 1, ml: '8%' }}>
-                                {contentA.map((val, ind) =>
-                                    <FormGroup key={ind}>
+                                {team.map((val, ind) => {
+                                    return (<FormGroup key={ind}>
                                         <FormControlLabel control={<Checkbox
-                                            onChange={() => {}}
+                                            id="checkbox-elem"
+                                            onChange={(e) => updateSelection(ind, val, e.target)}
                                             icon={<LabelOutlinedIcon />}
                                             checkedIcon={<LabelIcon />}
-                                        />} label={val} />
-                                    </FormGroup>
-                                )}
+                                        />} label={val.name} />
+                                    </FormGroup>)
+                                })}
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid container md={2} sm={2} xs={2} alignItems="center" justifyContent="center">
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                            <IconButton><ArrowCircleRightOutlinedIcon color="primary" fontSize="large" /></IconButton>
-                            <IconButton><ArrowCircleLeftOutlinedIcon color="primary" fontSize="large" /></IconButton>
-                        </Box>
-                    </Grid>
-                    <Grid item md={5} sm={5} xs={5}>
+                    <Grid item md={6} sm={6} xs={6}>
                         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <CardHeader title={<Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center" }}>Team B</Typography>} />
                             <CardContent>
-                                {contentB.map((val, ind) =>
-                                    <FormGroup key={ind}>
+                                {teamB.map((val, ind) => {
+                                    return (<FormGroup key={ind}>
                                         <FormControlLabel control={<Checkbox
                                             onChange={() => {}}
                                             icon={<LabelOutlinedIcon />}
                                             checkedIcon={<LabelIcon />}
-                                        />} label={val} />
-                                    </FormGroup>
-                                )}
+                                        />} label={val.name} />
+                                    </FormGroup>)
+                                })}
                             </CardContent>
                         </Card>
                     </Grid>
                 </Grid>
+                <Stack sx={{ pt: 2 }} direction="column" justifyContent="center" spacing={2}>
+                    <Button variant="contained" size="small" onClick={() => { modifyTeams() }}>Transfer A to B</Button>
+                    <Button variant="contained" size="small">Transfer B to A</Button>
+                </Stack>
             </Container >
             <FooterTodo />
-        </div>
+        </div >
     );
 }
 
