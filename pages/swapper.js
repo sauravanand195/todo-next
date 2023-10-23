@@ -10,11 +10,10 @@ const Swapper = () => {
         { name: 'Saurav', state: false },
         { name: 'Anvesh', state: false },
         { name: 'Viraj', state: false },
-        { name: 'Polar', state: false },
-        { name: 'Tharic', state: false }
     ], [
-        { name: 'ERT', state: false },
-        { name: 'MAn', state: false }
+        { name: 'Polar', state: false },
+        { name: 'Tharic', state: false },
+        { name: 'Abhishek', state: false }
     ]])
 
     const updateSelection = (ind, e, bol) => {
