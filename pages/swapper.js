@@ -14,8 +14,8 @@ const Swapper = () => {
         { name: 'Tharic', state: false }
     ], [
         { name: 'ERT', state: false },
-        { name: 'MAn', state: false }]
-    ])
+        { name: 'MAn', state: false }
+    ]])
 
     const updateSelection = (ind, e, bol) => {
         let tm = []
@@ -38,15 +38,15 @@ const Swapper = () => {
             <AppNavBar label="Home" />
             <Container maxWidth="md" sx={{ minHeight: '78vh' }}>
                 <Grid container pt={8} spacing={2}>
-                    {team.map((v, i) => <Grid item md={6} sm={6} xs={6} key={i}>
+                    {team.map((team, index) => <Grid item md={6} sm={6} xs={6} key={index}>
                         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <CardHeader title={<Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center" }}>Team A</Typography>} />
                             <CardContent sx={{ flexGrow: 1, ml: '8%' }}>
-                                {v.map((val, ind) => {
+                                {team.map((val, ind) => {
                                     return (<FormGroup key={ind}>
                                         <FormControlLabel control={<Checkbox
                                             checked={val.state}
-                                            onChange={(e) => updateSelection(ind, e.target, i)}
+                                            onChange={(e) => updateSelection(ind, e.target, index)}
                                             icon={<LabelOutlinedIcon />}
                                             checkedIcon={<LabelIcon />}
                                         />} label={val.name} />
